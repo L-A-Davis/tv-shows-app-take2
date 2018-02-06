@@ -1,28 +1,62 @@
-.App {
+.App, body {
   text-align: center;
+  background: #eaeaea;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+#show-container {
+
+  padding-top: 1%;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.detail, .episode, .favorites {
+  background: white;
+  border: 2px solid grey;
 }
 
-.App-title {
-  font-size: 1.5em;
+#top-of-page {
+  margin: 2%;
+  display: grid;
+  grid-template-columns: 25% 73%;
+  grid-column-gap: 2%;
+  background-color:
 }
 
-.App-intro {
-  font-size: large;
+#bottom-of-page {
+  margin: 2%;
+  background: #eaeff9;
+  border: 2px solid grey;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#episode-list {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-column-gap: 2%;
+  justify-content: space-around;
+  margin-top: 1%;
+}
+
+.episode {
+  margin-bottom: 3%;
+  border-radius: 5px;
+
+}
+
+img {
+  margin: 1%;
+}
+
+.detail p, li {
+  text-align: left
+}
+
+.detail {
+  padding-left: 1%;
+}
+
+.favorites, .detail {
+  border-radius: 5px;
+
+}
+button {
+  margin-bottom: 1%;
 }

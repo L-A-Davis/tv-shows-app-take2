@@ -3,6 +3,7 @@ import React from 'react';
 const Filter = ({handleChange, filters}) => {
   return (
     <div>
+    <h2>Episode List</h2>
     <label>Select Season: </label>
     <select
      onChange={handleChange}

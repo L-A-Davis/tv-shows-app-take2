@@ -4,6 +4,8 @@ import EpisodeList from './EpisodeList';
 import ShowSummary from './ShowSummary';
 import Filter from './Filter.js';
 import Sort from './Sort.js';
+import FavoriteList from './FavoriteList';
+import EpisodeDetail from './EpisodeDetail';
 
 const URL =  `http://api.tvmaze.com/search/shows?q=`
 const URL_EPISODES = `http://api.tvmaze.com/shows/`
@@ -18,6 +20,7 @@ class ShowContainer extends React.Component {
     filters: [],
     currentFilter: null,
     favorites: [],
+    favoritesShows:[],
     currentSort: null
   }
 
@@ -52,7 +55,7 @@ class ShowContainer extends React.Component {
 
    getEpisodes = () => {
      fetch(`${URL_EPISODES}${this.state.show.id}/episodes`).then(resp=>
-       resp.json()).then(console.log)
+       resp.json())
    }
 
   handleSearchInput = (event) => {
@@ -65,7 +68,8 @@ class ShowContainer extends React.Component {
     event.preventDefault();
     this.getShow()
     this.setState ({
-      searchTerm: ''
+      searchTerm: '',
+      episodeInDetail: ''
     })
   }
 
@@ -84,13 +88,13 @@ class ShowContainer extends React.Component {
   }
 
   compareByTitle = (a,b) => {
+
     if (a.name < b.name)
       return -1;
     if (a.name > b.name)
       return 1;
     return 0;
   }
-
 
   compareByAirDate = (a,b) => {
     let aparts = a.airdate.split('-')
@@ -104,32 +108,59 @@ class ShowContainer extends React.Component {
     return 0;
   }
 
+  addToFavorites = (show, masterShow) => {
+    this.setState({
+      favorites: this.state.favorites.concat([show]),
+      favoritesShows: this.state.favoritesShows.concat([masterShow])
+    })
+  }
+
+  showInDetail = (show) => {
+    this.setState({
+      episodeInDetail: show
+    })
+  }
+
   render() {
-    console.log(this.state)
     return (
-      <div>
+      <div id="show-container">
       < SearchShows
           searchTerm={this.state.searchTerm} handleSearchInput={this.handleSearchInput}
           handleSearchSubmit={this.handleSearchSubmit}
       />
-      < ShowSummary show={this.state.show}
-        seasons={this.state.filters.length}
-      />
-      <Filter
-          filters={this.state.filters}
-          handleChange={this.onUpdateFilter}
-      />
-      <Sort
-          handleSortChange={this.handleSortChange}
-      />
-      < EpisodeList
-        episodeList={this.state.episodeList}
-        currentFilter={this.state.currentFilter}
-        compareByAirtime={this.compareByAirtime}
-        compareByTitle={this.compareByTitle}
-        compareByAirDate={this.compareByAirDate}
-        currentSort={this.state.currentSort}
-      />
+      <div id="top-of-page">
+        <FavoriteList
+            favorites={this.state.favorites}
+            favoritesShows={this.state.favoritesShows}
+        />
+        < EpisodeDetail
+            show={this.state.episodeInDetail}
+          />
+        < ShowSummary show={this.state.show}
+          seasons={this.state.filters.length}
+          detail={this.state.episodeInDetail}
+        />
+      </div>
+      <div id="bottom-of-page">
+          <Filter
+              filters={this.state.filters}
+              handleChange={this.onUpdateFilter}
+          />
+          <Sort
+              handleSortChange={this.handleSortChange}
+          />
+          < EpisodeList
+            episodeList={this.state.episodeList}
+            currentFilter={this.state.currentFilter}
+            compareByAirtime={this.compareByAirtime}
+            compareByTitle={this.compareByTitle}
+            compareByAirDate={this.compareByAirDate}
+            currentSort={this.state.currentSort}
+            addToFavorites={this.addToFavorites}
+            masterShow={this.state.show}
+            showInDetail={this.showInDetail}
+          />
+        </div>
       </div>
     )
   }
