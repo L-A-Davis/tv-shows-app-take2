@@ -91,13 +91,6 @@ class ShowContainer extends React.Component {
     return 0;
   }
 
-  compareByAirtime = (a,b) => {
-    if (a.runtime < b.runtime)
-      return -1;
-    if (a.runtime > b.runtime)
-      return 1;
-    return 0;
-  }
 
   compareByAirDate = (a,b) => {
     let aparts = a.airdate.split('-')
